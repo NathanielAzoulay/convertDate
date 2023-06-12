@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hebrew Date Converter</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f5f5f5;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#datepicker").datepicker();
+
+      $('#convertBtn').click(function() {
+        var inputDate = $('#datepicker').datepicker('getDate');
+        var formattedDate = $.datepicker.formatDate("dd-mm-yy", inputDate);
+        var apiUrl = "https://www.hebcal.com/converter/?cfg=json&gy=" + formattedDate.substring(6, 10) + "&gm=" + formattedDate.substring(3, 5) + "&gd=" + formattedDate.substring(0, 2) + "&g2h=1";
+
+        $.getJSON(apiUrl, function(data) {
+          var hebrewDate = data.hebrew;
+          $('#result').text("Hebrew date: " + hebrewDate);
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Hebrew Date Converter</h1>
+    <label for="datepicker">Date (DD/MM/YYYY):</label>
+    <input type="text" id="datepicker" name="datepicker" placeholder="Select a date" required>
+    <button id="convertBtn">Convert</button>
+    <div id="result"></div>
+  </div>
+</body>
+</html>

@@ -2,8 +2,9 @@
 <html>
 <head>
   <title>Hebrew Date Converter</title>
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css"> 
   <style>
+  // This block contains custom CSS styles for the layout of the HTML page, such as background color, font, container size, etc.
     body {
       background-color: #f0f0f0;
       font-family: Arial, sans-serif;
@@ -45,7 +46,7 @@
       border-radius: 3px;
       cursor: pointer;
     }
-
+//  This block defines the styles for the result div that displays the converted Hebrew date. It also links the necessary jQuery and jQuery UI libraries for calendar functionality.
     #result {
       margin-top: 20px;
       padding: 10px;
@@ -58,15 +59,26 @@
   <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
   <script>
     $(document).ready(function() {
+      // Initialize the date picker
       $("#datepicker").datepicker();
 
+      // Listen for the click event on the convert button
       $('#convertBtn').click(function() {
+        // Get the selected date from the date picker
         var inputDate = $('#datepicker').datepicker('getDate');
+
+        // Format the date in the desired format for the API
         var formattedDate = $.datepicker.formatDate("dd-mm-yy", inputDate);
+
+        // Construct the API URL with the formatted date
         var apiUrl = "https://www.hebcal.com/converter/?cfg=json&gy=" + formattedDate.substring(6, 10) + "&gm=" + formattedDate.substring(3, 5) + "&gd=" + formattedDate.substring(0, 2) + "&g2h=1";
 
+        // Make a GET request to the API and handle the response
         $.getJSON(apiUrl, function(data) {
+          // Extract the Hebrew date from the response
           var hebrewDate = data.hebrew;
+
+          // Display the Hebrew date on the page
           $('#result').text("Hebrew date: " + hebrewDate);
         });
       });

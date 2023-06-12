@@ -88,7 +88,7 @@
 <body>
   <div class="container">
     <h1>Hebrew Date Converter</h1>
-    <label for="datepicker">Date (DD/MM/YYYY):</label>
+    <label for="datepicker">Date (MM/DD/YYYY) - Month/Day/Year:</label>
     <input type="text" id="datepicker" name="datepicker" placeholder="Select a date" required>
     <button id="convertBtn">Convert</button>
     <div id="result"></div>
